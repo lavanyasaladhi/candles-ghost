@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Haunted Ghost</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <h1>Haunted Ghost</h1>
+
+    <div id="hud">
+      <span>Candles <b id="score">0</b></span>
+      <div id="bar" title="Your glow"><div id="fill"></div></div>
+      <span>Best <b id="best">0</b></span>
+      <button id="mute" aria-label="Toggle music">Music on</button>
+    </div>
+
+    <div id="stage">
+      <canvas id="c" width="800" height="500" aria-label="Haunted Ghost game"></canvas>
+      <div id="msg">
+        <h2 id="title">The house is awake</h2>
+        <p id="sub">Drift through the dark and snuff out every candle. Stay out of the hunters' lantern light or your glow will fade.</p>
+        <p class="small">Arrow keys or WASD to move. On touch, hold and drag. Press M to mute.</p>
+        <button id="go">Start haunting</button>
+      </div>
+    </div>
+  </main>
+  <script src="game.js"></script>
+</body>
+</html>

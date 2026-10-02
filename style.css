@@ -1,0 +1,139 @@
+:root {
+  --night: #000000;
+  --fog: #2a2a30;
+  --ghost: #ffffff;
+  --candle: #ffb347;
+  --hunter: #e0505a;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+
+body {
+  background: #000;
+  color: var(--ghost);
+  font-family: 'IM Fell English', Georgia, serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  overflow: hidden;
+}
+
+/* slow drifting fog: the one ambient motion on the page */
+body::before {
+  display: none;
+  content: "";
+  position: fixed;
+  inset: -20%;
+  background:
+    radial-gradient(40% 25% at 20% 70%, rgba(150, 120, 210, .16), transparent 70%),
+    radial-gradient(45% 30% at 80% 40%, rgba(150, 120, 210, .12), transparent 70%);
+  animation: drift 40s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+@keyframes drift { to { transform: translate(8%, -4%) scale(1.1); } }
+
+main {
+  position: relative;
+  width: min(100%, 900px);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+h1 {
+  margin: 0;
+  text-align: center;
+  font-size: clamp(1.8rem, 6vw, 2.8rem);
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: .05em;
+  text-shadow: 0 0 18px rgba(243, 240, 255, .55);
+  animation: flicker 6s infinite;
+}
+@keyframes flicker {
+  0%, 92%, 100% { opacity: 1; }
+  94% { opacity: .55; }
+  96% { opacity: 1; }
+  98% { opacity: .7; }
+}
+
+#hud {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 1.1rem;
+}
+#hud b { color: var(--candle); font-weight: 400; margin-left: 4px; }
+#bar {
+  flex: 1;
+  height: 10px;
+  border: 1px solid var(--fog);
+  border-radius: 5px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, .35);
+}
+#fill {
+  height: 100%;
+  width: 100%;
+  background: var(--ghost);
+  box-shadow: 0 0 12px #ffffff;
+  transition: width .1s, background .2s;
+}
+
+#stage {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  border: 2px solid var(--fog);
+  border-radius: 8px;
+  box-shadow: 0 0 0 6px #000, 0 0 40px rgba(255, 255, 255, .08);
+  overflow: hidden;
+  background: #000;
+}
+canvas { width: 100%; height: 100%; display: block; touch-action: none; }
+
+#msg {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 20px;
+  text-align: center;
+  background: rgba(0, 0, 0, .9);
+}
+#msg h2 { margin: 0; font-size: clamp(1.6rem, 5vw, 2.2rem); font-weight: 400; font-style: italic; }
+#msg p { margin: 0; max-width: 36ch; line-height: 1.5; font-size: 1.1rem; }
+#msg .small { font-size: .95rem; opacity: .7; }
+
+button {
+  font: inherit;
+  color: var(--night);
+  background: var(--candle);
+  border: 0;
+  border-radius: 4px;
+  padding: 10px 26px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: transform .12s, box-shadow .12s;
+}
+button:hover { transform: translateY(-1px); box-shadow: 0 0 16px rgba(255, 179, 71, .6); }
+button:focus-visible { outline: 3px solid var(--ghost); outline-offset: 3px; }
+#mute { padding: 4px 12px; font-size: .9rem; background: transparent; color: var(--ghost); border: 1px solid var(--fog); }
+
+.hide { display: none !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  body::before, h1 { animation: none; }
+}
+
+/* faint purple mist along the edges of the game area (visual only) */
+#stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: none;
+}
